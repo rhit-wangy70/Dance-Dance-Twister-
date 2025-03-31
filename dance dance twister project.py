@@ -4,6 +4,8 @@
 
 import time
 import random
+import uasyncio as asyncio
+
 
 
 def gamestart(list):
@@ -12,16 +14,18 @@ def gamestart(list):
     "in one color and the latter 2 will goes in another color"
 
 
-def popping_up(emptytiles, t):
+async def popping_up(emptytiles, t):
     "What goes in: a list containing 2 #s and 1 integer; what comes out: nothing; side effect: as shown below"
     "LED at 2 positions need to glow, with emptytiles[0] in one color and emptytiles[1] in another and brightness increase"
     "from 0 → 255, then decrease from 255 to 0, the number of looping is according to difficuity level t"
+    "* all time.sleep() in this function need to be changed into await asyncio.sleep() "
 
 
-def going_off(going_off, t):
+async def going_off(going_off, t):
     "What goes in: a list with 2# and 1 integer; what comes out: nothing; side effect: as shown below"
     "LED in two lighted positions need to blink at 0.5Hz and have brightness reduced from 255 to 0 "
-    "the time of changes is according to difficulty level t.  "
+    "the time of changes is according to difficulty level t. "
+    "* all time.sleep() in this function need to be changed into await asyncio.sleep() "
 
 
 def messing_up(oops):
@@ -45,11 +49,13 @@ def active_or_not(tile):
     return position
 
 
-def main():
+
+async def main():
     "What comes in: nothing; What comes out: an integer(standing for rounds passed); Side effect: shown below"
     "generate 4 different random numbers, call gamestart() to start the game "
     "if all 4 tiles are active, start the loop"
     "loop content: an increasing #, if statement, popping_up and going_off, messing_up if the if statement is active"
+    "* all time.sleep() in this function need to be changed into await asyncio.sleep() "
     occupied = []
     empty = []
     off = []
@@ -62,8 +68,7 @@ def main():
     # detent whether all four tiles are stepped. if yes, start game. If no, wait till they're all stepped.
     for i in range(100):
         off = random.sample(occupied, 2)
-        popping_up(empty, i)
-        going_off(off, i)
+        await asyncio.gather(popping_up(empty, i),going_off(off, i))
         messing_up = off + empty
         #if tiles in off is not removed or in empty is unpressed
             # messing_up(messing_up)
@@ -79,4 +84,4 @@ def main():
 # starting 3 blink sequence
 
 # main code
-main()
+asyncio.run(main())
