@@ -7,6 +7,11 @@
 #main code
 
 # starting 3 blink sequence
+def popping_up ():
+
+def going_off ():
+
+def messing_up ():
 
 # first tile
 
