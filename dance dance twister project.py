@@ -30,7 +30,7 @@ def messing_up(oops):
 
 
 def active_or_not(tile):
-    "What comes in: a list of numbers; what comes out: True or location; Side effect: nothing"
+    "What comes in: a list of numbers; what comes out: True or a list of location; Side effect: nothing"
     "for tiles at location if at least 2 of 4 sensors(might change as numbers of sensors changed)"
     "are activated, return True; else return position"
     count = 0
