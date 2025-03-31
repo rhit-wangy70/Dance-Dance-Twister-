@@ -24,8 +24,8 @@ def going_off(going_off, t):
     "the time of changes is according to difficulty level t.  "
 
 
-def messing_up():
-    "What comes in: nothing; What goes out: nothing; side effect: as shown below"
+def messing_up(oops):
+    "What comes in: a list of numbers; What goes out: nothing; side effect: as shown below"
     "LED that was going off and popping up turn red and blink for 3 times"
 
 
