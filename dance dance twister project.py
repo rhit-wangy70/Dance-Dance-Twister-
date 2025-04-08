@@ -2,9 +2,10 @@
 # made by Jack Wang, Carter Werkerma, Brian Yamada
 # started on 3/27/2025
 
+from machine import pin
 import time
 import random
-import uasyncio as asyncio
+import asyncio
 
 
 
@@ -12,20 +13,25 @@ def gamestart(list):
     "What comes in: a list of 4 numbers; What goes out: none; Side effect: below"
     "All LED needs to blink in a circuilar pattern, then the first 2 of list tiles will start glowing"
     "in one color and the latter 2 will goes in another color"
-
+    b1 = Pin(0, Pin.IN, Pin.PULL_UP)
+    b2 = Pin(1, Pin.IN, Pin.PULL_UP)
+    b3 = Pin(2, Pin.IN, Pin.PULL_UP)
+    b4 = Pin(3, Pin.IN, Pin.PULL_UP)
+    b5 = Pin(4, Pin.IN, Pin.PULL_UP)
+    b6 = Pin(5, Pin.IN, Pin.PULL_UP)
 
 async def popping_up(emptytiles, t):
     "What goes in: a list containing 2 #s and 1 integer; what comes out: nothing; side effect: as shown below"
     "LED at 2 positions need to glow, with emptytiles[0] in one color and emptytiles[1] in another and brightness increase"
     "from 0 → 255, then decrease from 255 to 0, the number of looping is according to difficuity level t"
-    "* all time.sleep() in this function need to be changed into await asyncio.sleep() "
+    "* all 'time.sleep()' in this function need to be changed into await asyncio.sleep() "
 
 
 async def going_off(going_off, t):
     "What goes in: a list with 2# and 1 integer; what comes out: nothing; side effect: as shown below"
     "LED in two lighted positions need to blink at 0.5Hz and have brightness reduced from 255 to 0 "
     "the time of changes is according to difficulty level t. "
-    "* all time.sleep() in this function need to be changed into await asyncio.sleep() "
+    "* all 'time.sleep()' in this function need to be changed into await asyncio.sleep() "
 
 
 def messing_up(oops):
@@ -65,7 +71,8 @@ async def main():
     occupied = random.sample(range(1, 7), 4)
     empty = set(allnumbers) - set(occupied)  # removing occupied from allnumbers
     gamestart(occupied)
-    # detent whether all four tiles are stepped. if yes, start game. If no, wait till they're all stepped.
+    # this line of code detect whether all four tiles are stepped.
+    # if yes, start game. If no, wait till they're all stepped.(haven't written yet)
     for i in range(100):
         off = random.sample(occupied, 2)
         await asyncio.gather(popping_up(empty, i),going_off(off, i))
@@ -76,7 +83,7 @@ async def main():
             occupied = (set(occupied) - set(off)) | set(empty)
             rounds = rounds + 1
 
-    print(rounds)
+
 # second tile
 
 # thrid tile and onward of random tile
